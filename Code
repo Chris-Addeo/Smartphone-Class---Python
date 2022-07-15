@@ -1,0 +1,133 @@
+#Christopher Addeo, 11/29, Assignment 11 Problem 2, "Smartphone"
+
+# create the smartphone class
+class smartphone:
+    
+    def __init__(self, capacity, name, appname='', appsize=0):
+        # bring in the capacity and name
+        self.capacity = int(capacity)
+        self.name = name
+        self.appname = appname
+        self.appsize = appsize
+        
+        # create lists for adding apps
+        self.my_apps = dict()
+        self.my_space = 0
+        self.installed = 0
+
+    def add_app(self, appname, appsize):
+        # bring in the apps
+        self.appname = appname
+        self.appsize = appsize
+        
+        # test if there is space on phone
+        self.my_space += self.appsize
+        if self.my_space > self.capacity:
+            print("Cannot install app, no available space")
+            self.my_space -= self.appsize
+        
+        # if app already installed
+        elif self.appname in self.my_apps:
+            print("App is already installed.")
+            self.my_space -= self.appsize
+            
+        # add the app's name + size + count total
+        else:
+            self.my_apps[self.appname] = self.appsize
+            self.installed += 1
+            print("App added:", appname)
+    
+    def remove_app(self, appname):
+        # if app is in storage
+        if appname in self.my_apps:
+            del self.my_apps[appname]
+            self.my_space -= self.appsize
+            self.installed -= 1
+            print("App removed:", appname)
+        
+        # if app not in storage
+        else:
+            print("App was never installed.")
+    
+    def has_app(self, appname):
+        # if app is in storage
+        if self.appname in self.my_apps(keys):
+            return True
+        
+        # if app not in storage
+        else:
+            return False
+    
+    def get_available_space(self):
+        self.available = self.capacity - self.my_space
+        return self.available
+
+    def report(self):
+        print("Name:", self.name)
+        print("Capacity:", self.my_space, "out of", self.capacity, "GB")
+        print("Available space:", self.available)
+        print("Apps installed:", self.installed)
+        for z in sorted(self.my_apps):
+            print("*", z, "is using", self.my_apps[z])
+
+# ask for capacity and name, then create output
+while True:
+    capacity = input("Size of your new smartphone (32, 64 or 128 GB): ")
+    if capacity == "32" or capacity == "64" or capacity == "128":
+        break
+    else:
+        print("Must be an integer of one of those three sizes.\n")
+name = input("Smartphone name: ")
+print("Smartphone created!")
+print("Name:", name)
+print("Capacity: 0 out of", capacity, "GB")
+print("Available space:", capacity)
+print("Apps installed: 0\n")
+
+# create class and all of its empty variables
+phone = smartphone(capacity,name)
+phone.capacity = int(capacity)
+phone.name = name
+phone.my_apps = dict()
+phone.my_space = 0
+phone.installed = 0
+
+# create user loop
+while True:
+    user = input("(r)eport, (a)dd app, r(e)move app or (q)uit: ")
+    
+    # if user picks report
+    if user == "r":
+        phone.get_available_space()
+        phone.report()
+        print()
+    
+    # if user picks add
+    elif user == "a":
+        phone.appname = input("App name to add: ")
+        try:
+            phone.appsize = int(input("App size in GB: "))
+        except:
+            x = 0
+            while x == 0:
+                print("App size must be an integer, try again.")
+                appsize = input("App size in GB: ")
+                if appsize.isdigit:
+                    x = 1
+        phone.add_app(phone.appname, phone.appsize)
+        print()
+    
+    # if user picks remove
+    elif user == "e":
+        phone.appname = input("App name to remove: ")
+        phone.remove_app(phone.appname)
+        print()
+    
+    # if user picks quit
+    elif user == "q":
+        print("Goodbye!")
+        break
+    
+    # if user makes invalid choice
+    else:
+        print("That is not a valid input, try again.\n")
